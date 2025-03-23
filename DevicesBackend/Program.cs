@@ -4,6 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+int port = builder.Configuration.GetValue<int>("PORT");
+
+builder.WebHost.ConfigureKestrel(serverOptions => 
+{
+    serverOptions.ListenAnyIP(port);
+});
+
 
 string? pathToDB = builder.Configuration.GetSection("PathToDB").Value;
 if (string.IsNullOrEmpty(pathToDB))
@@ -19,6 +26,15 @@ builder.Services.AddTransient<DeviceService>();
 
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var dbContext = services.GetRequiredService<ApplicationDbContext>();
+
+    dbContext.Database.EnsureDeleted();
+    dbContext.Database.EnsureCreated();
+}
 
 app.UseBaseAuthorization();
 

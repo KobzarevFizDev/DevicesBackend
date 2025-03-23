@@ -23,7 +23,7 @@ namespace DevicesBackend.Controllers
             return Ok(devices);
         }
 
-        [HttpPost("/api/device/{id}")]
+        [HttpPost("/api/devices/{id}")]
         public async Task<IActionResult> AddNewDevice(int id, [FromBody] JObject createDeviceRequest)
         {
             string? deviceType = createDeviceRequest.GetValue("type")?.ToString();
@@ -51,14 +51,14 @@ namespace DevicesBackend.Controllers
             return Ok();
         }
 
-        [HttpDelete("/api/device/{id}")]
+        [HttpDelete("/api/devices/{id}")]
         public async Task<IActionResult> DeleteDeviceById(int id)
         {
             await _deviceService.RemoveDeviceWithId(id);
             return Ok();
         }
 
-        [HttpDelete("/api/device/type/{type}")]
+        [HttpDelete("/api/devices/type/{type}")]
         public async Task<IActionResult> DeleteDeviceByType(string type)
         {
             if (string.IsNullOrEmpty(type))
@@ -67,7 +67,7 @@ namespace DevicesBackend.Controllers
             }
             else
             {
-                await _deviceService.RemoveDeviceWithType(type);
+                await _deviceService.RemoveDevicesWithType(type);
                 return Ok();
             }
         }
