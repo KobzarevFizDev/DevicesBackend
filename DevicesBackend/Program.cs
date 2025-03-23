@@ -22,8 +22,6 @@ builder.Services.AddEndpointsApiExplorer();
 
 builder.Services.AddTransient<UserService>();
 builder.Services.AddTransient<DeviceService>();
-//builder.Services.AddSwaggerGen();
-
 
 var app = builder.Build();
 
@@ -38,16 +36,5 @@ using (var scope = app.Services.CreateScope())
 
 app.UseBaseAuthorization();
 
-
-// Configure the HTTP request pipeline.
-//if (app.Environment.IsDevelopment())
-//{
-//    app.UseSwagger();
-//    app.UseSwaggerUI();
-//}
-
-app.UseAuthorization();
-
 app.MapControllers();
-
 app.Run();
