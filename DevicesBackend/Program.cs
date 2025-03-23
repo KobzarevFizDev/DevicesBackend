@@ -20,6 +20,15 @@ builder.Services.AddTransient<DeviceService>();
 
 var app = builder.Build();
 
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var dbContext = services.GetRequiredService<ApplicationDbContext>();
+
+    dbContext.Database.EnsureDeleted();
+    dbContext.Database.EnsureCreated();
+}
+
 app.UseBaseAuthorization();
 
 
