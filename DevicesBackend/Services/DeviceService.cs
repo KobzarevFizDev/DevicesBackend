@@ -37,13 +37,15 @@ namespace DevicesBackend.Services
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task RemoveDeviceWithType(string type)
+        public async Task RemoveDevicesWithType(string type)
         {
-            Device? device = await _dbContext.Devices.FirstOrDefaultAsync(d => d.Type == type);
-            if (device == null)
-                return;
+            List<Device> devices = await _dbContext.Devices.Where(d => d.Type == type).ToListAsync();
+            
+            foreach(Device device in devices)
+            {
+                _dbContext.Devices.Remove(device);
+            }
 
-            _dbContext.Devices.Remove(device);
             await _dbContext.SaveChangesAsync();
         }
     }

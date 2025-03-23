@@ -4,6 +4,13 @@ using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+int port = builder.Configuration.GetValue<int>("PORT");
+
+builder.WebHost.ConfigureKestrel(serverOptions => 
+{
+    serverOptions.ListenAnyIP(port);
+});
+
 
 string? pathToDB = builder.Configuration.GetSection("PathToDB").Value;
 if (string.IsNullOrEmpty(pathToDB))
