@@ -1,46 +1,44 @@
 <h1 align="center">DevicesBackend </h1>
 
-<h2 align="left">Задача: </h2>
+<h2 align="left">Task: </h2>
 
-Используя .net 5+ написать небольшой веб сервер (ASP.Net Core), способный принимать 4 
-запроса:
-<br/> **(GET)** : /api/devices - получение списка устройств
-<br/> **(POST)** : /api/devices/{id} - добавление нового устройства
-<br/> **(DELETE)** : /api/devices/{id} - удаление существующего устройства по id
-<br/> **(DELETE)** : /api/devices/type/{type} - удаление существующих устройств по типу
-Модель сохраняемых данных:
+Using .NET 5+ (or higher), write a small web server (ASP.Net Core) capable of handling 4 requests:
+**(GET)** : /api/devices - get list of devices
+**(POST)** : /api/devices/{id} - add a new device
+**(DELETE)** : /api/devices/{id} - delete an existing device by id
+**(DELETE)** : /api/devices/type/{type} - delete existing devices by type
+
+Data model to be stored:
+
 ```
 {
-“Id”:1,
-“Type”: ”Type_1”
+    “Id”:1,
+    “Type”: ”Type_1”
 }
 ```
-Cервер должен запустить на 12300 порту и работать в рамках HTTP 1.x:
-Модель аутентификация: Basic authentication
-Сохранение данных организовать в SQLite. Для доступа к данным можно использовать 
-или EF Core или Dapper
 
+The server must run on port 12300 and operate within HTTP 1.x.
+Authentication model: Basic authentication
+Data storage is implemented using SQLite. For data access, either EF Core or Dapper can be used.
 
+<h2 align="left">Solution: </h2>
 
-<h2 align="left">Решение: </h2> 
+The task is implemented on .NET 8 using EF Core for SQLite access.
+Basic authentication model is used.
+**Password: admin**
+**Login: admin**
+To access the resource, the Authorization header of the HTTP request must have the value: **Basic YWRtaW46YWRtaW4=**
 
-<br/> Задача выполнена на net 8 с использованием EF Core для доступа SQLite. 
-<br/> Проект развернут с помощью Docker по адресу: **http://87.228.38.57:12300**
-<br/> Используется Basic authentication модель авторизации
-<br/> **Пароль: admin** 
-<br/> **Логин: admin**
-<br/> Для доступа к ресурсу нужно чтобы в заголовке Authorization HTTP запроса было значение: **Basic YWRtaW46YWRtaW4=**
- 
-<h2 align="left"> Пример запросов в Posman: </h2> 
+<h2 align="left"> Example requests in Postman: </h2>
 
-Get запрос на получение всех устройств
+GET request to retrieve all devices
 ![Interface](https://github.com/KobzarevFizDev/DevicesBackend/raw/main/images/1.png)
 
-Post запрос на создание нового устройства
+POST request to create a new device
 ![Interface](https://github.com/KobzarevFizDev/DevicesBackend/raw/main/images/2.png)
 
-Delete запрос на удаление устройства по ID
+DELETE request to delete a device by ID
 ![Interface](https://github.com/KobzarevFizDev/DevicesBackend/raw/main/images/3.png)
 
-Delete запрос на удаление устройства по типу
+DELETE request to delete devices by type
 ![Interface](https://github.com/KobzarevFizDev/DevicesBackend/raw/main/images/4.png)
